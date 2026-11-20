@@ -1,0 +1,37 @@
+name: Build animated PallTune README artwork
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/generate_readme_gifs.py'
+      - '.github/workflows/build-readme-gifs.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Generate 6 original animated GIFs
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install Pillow
+        run: python -m pip install --disable-pip-version-check Pillow
+      - name: Generate and validate GIF animation assets
+        run: python scripts/generate_readme_gifs.py
+      - name: Commit generated images
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add assets/palltune-*.gif
+          if ! git diff --cached --quiet; then
+            git commit -m 'Add original animated PallTune README assets'
+            git push
+          else
+            echo 'GIF artwork already up to date'
+          fi
