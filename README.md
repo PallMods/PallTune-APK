@@ -1,41 +1,56 @@
-# PallTune — Android APK
+<div align="center">
 
-Repository resmi distribusi APK **PallTune**. Aplikasi musik gratis untuk Android.
+# PallTune
 
-**Website:** https://palltune.vercel.app/
+### Musikmu, Seleramu.
 
-## Download versi terbaru
+**Aplikasi musik Android untuk menikmati lagu dengan caramu sendiri.**
 
-Setelah rilis pertama selesai, tombol unduh di website dapat memakai URL permanen:
+Cari lagu favorit, susun playlist, ikuti lirik, dan dengarkan musik bersama teman dalam satu aplikasi.
 
-https://github.com/PallMods/PallTune-APK/releases/latest/download/PallTune.apk
+[**⬇ Download PallTune untuk Android**](https://github.com/PallMods/PallTune-APK/releases/latest/download/PallTune.apk) · [**Website PallTune**](https://palltune.vercel.app)
 
-Unduhan mengarah ke file APK, bukan halaman daftar rilis GitHub.
+</div>
 
-## Cara update aplikasi
+---
 
-1. Siapkan APK versi terbaru, **rename jadi `PallTune.apk`**.
-2. Buka tab **Releases** di repository GitHub ini, pilih **Draft a new release**.
-3. Buat tag baru, contoh `v4.3.6`. Set judul `PallTune V4.3.6`.
-4. Upload file APK sebagai **release asset** (bukan commit file biasa).
-5. Pastikan **Set as latest release** aktif, **Pre-release** nonaktif.
-6. Klik **Publish release**.
+## Kenalan dengan PallTune
 
-Link permanen otomatis menunjuk asset `PallTune.apk` dari release terbaru tanpa mengubah website Vercel.
+**PallTune** adalah aplikasi pemutar musik untuk Android dengan pengalaman mendengarkan yang simpel, nyaman, dan personal. Dari lagu yang kamu putar sendiri sampai sesi musik bareng teman, semuanya dirancang buat menemani aktivitas sehari-hari.
 
+**Musikmu, Seleramu.** Pilih lagunya, atur suasananya.
 
-## File APK yang terbaru (unggahan pemilik)
+## Fitur PallTune
 
-- Nama release asset: `PallTune.apk`
-- Ukuran: `37,550,424` bytes (~37.55 MB)
-- SHA-256: `1202a104dbcebd5032f2f69611dce40d66dd2eefe668de9ae1adc997f68a3c7c`
+| Fitur | Yang bisa kamu lakukan |
+| --- | --- |
+| 🎵 **Cari & Putar Musik** | Temukan lagu atau artis yang kamu suka dan nikmati lewat pemutar musik. |
+| 📂 **Playlist** | Simpan dan susun lagu dalam playlist sesuai suasana hati. |
+| 🎤 **Lirik Lagu** | Ikuti lirik sambil mendengarkan musik. |
+| 🎧 **Listen Together** | Dengarkan musik bersama teman. |
+| ▶️ **Antrean Lagu** | Atur urutan lagu yang ingin diputar berikutnya. |
+| 🎨 **Personalisasi Tampilan** | Sesuaikan tampilan aplikasi dengan seleramu. |
 
-File dikirim melalui ChatGPT. GitHub connector tidak dapat mengunggah binary APK sebagai release asset. Pemilik cukup mengunggah `PallTune.apk` ke draft release v4.3.5, lalu memilih Publish release.
+## Download untuk Android
 
-**Jangan gunakan file MediaFire sebelumnya sebagai pengganti tanpa verifikasi SHA-256,** karena berkas APK terbaru memiliki ukuran dan hash yang berbeda.
+**PallTune V4.3.5** · APK Android · **Gratis** · **37,55 MB**
 
-## Release v4.3.5
+### [⬇ Download PallTune.apk](https://github.com/PallMods/PallTune-APK/releases/latest/download/PallTune.apk)
 
-Workflow GitHub Actions di `.github/workflows/publish-v4.3.5.yml` mencoba mengimpor APK dari MediaFire hanya jika ukuran dan SHA-256 cocok dengan unggahan paling baru. MediaFire saat ini mengembalikan 404, maka opsi tepercaya adalah mengunggah berkas yang sudah dikirim pemilik langsung ke draft release lalu mempublikasikannya.
+File APK tersedia di [halaman Releases](https://github.com/PallMods/PallTune-APK/releases). Versi terbaru dapat diunduh melalui tombol di atas.
 
-**Penting:** Nama file APK harus **persis `PallTune.apk`** pada setiap release baru; bila tidak, URL permanen 404. Jangan tandai release sebagai pre-release.
+## Instalasi
+
+Unduh file APK, buka melalui pengelola berkas di Android, lalu ikuti petunjuk pemasangan. Periksa sumber file dan izin aplikasi sebelum menginstal.
+
+---
+
+<div align="center">
+
+**PallTune — Musikmu, Seleramu.**
+
+[Website](https://palltune.vercel.app) · [Download](https://github.com/PallMods/PallTune-APK/releases/latest/download/PallTune.apk)
+
+© PallTune
+
+</div>
