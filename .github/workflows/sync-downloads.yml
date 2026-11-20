@@ -1,0 +1,48 @@
+name: Sync real PallTune APK download count
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+  release:
+    types: [published]
+  push:
+    paths:
+      - '.github/workflows/sync-downloads.yml'
+      - 'scripts/sync_downloads.py'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: palltune-apk-download-counter
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - name: Checkout current main branch
+        uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Fetch true APK download count from GitHub Release API
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python scripts/sync_downloads.py
+      - name: Commit badge only if actual download count changed
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add assets/downloads.svg
+          if git diff --cached --quiet; then
+            echo 'Badge already matches GitHub API; nothing to commit.'
+          else
+            git commit -m 'Sync real PallTune APK download count from GitHub Releases'
+            git push origin HEAD:main
+          fi
