@@ -30,7 +30,7 @@ Cari musik favorit, susun playlist, nikmati lirik, dan dengerin bareng teman.
 &nbsp;
 <img src="https://img.shields.io/badge/ACCESS-FREE-8B939E?style=flat-square&labelColor=171A1F" alt="Gratis">
 &nbsp;
-<img src="https://img.shields.io/badge/TARGET%20DOWNLOADS-527-8B939E?style=flat-square&labelColor=171A1F" alt="Target 527 download, bukan statistik unduhan aktual">
+<a href="https://github.com/PallMods/PallTune-APK/releases"><img src="https://img.shields.io/github/downloads/PallMods/PallTune-APK/total?label=DOWNLOADS&style=flat-square&color=8B939E&labelColor=171A1F" alt="Jumlah download APK aktual dari GitHub Releases"></a>
 
 <br><br>
 
