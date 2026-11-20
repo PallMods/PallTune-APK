@@ -20,29 +20,38 @@ OUT = Path("PallTune.apk")
 
 
 def get_direct_url():
-    response = requests.get(
-        PAGE, headers={"User-Agent": "Mozilla/5.0"}, timeout=45
-    )
-    response.raise_for_status()
-    soup = BeautifulSoup(response.text, "html.parser")
-    button = soup.select_one("#downloadButton")
-    candidates = []
-    if button:
-        scrambled = button.get("data-scrambled-url")
-        if scrambled:
-            candidates.append(base64.b64decode(scrambled).decode("utf-8"))
-        candidates.append(button.get("href"))
-    for node in soup.select('a[aria-label="Download file"], a[href*="download"][href*="mediafire.com"]'):
-        candidates.append(node.get("href"))
-    candidates.extend(re.findall(r'https?://download[0-9]+\.mediafire\.com[^" <]+', response.text))
-    for candidate in candidates:
-        if candidate:
-            candidate = html.unescape(candidate)
-            parsed = urlparse(candidate)
-            if parsed.scheme == "https" and parsed.hostname and re.fullmatch(r"download\d*\.mediafire\.com", parsed.hostname):
-                return candidate
-    raise RuntimeError("Could not find MediaFire direct download URL; page may have changed.")
-
+    variants = [
+        PAGE,
+        "https://www.mediafire.com/file/nuwd6rktohfqhr0/",
+        "https://www.mediafire.com/?nuwd6rktohfqhr0",
+        "https://www.mediafire.com/file/nuwd6rktohfqhr0/PallTune%20V4.3.5.apk/file",
+    ]
+    errors = []
+    for page in variants:
+        try:
+            response = requests.get(page, headers={"User-Agent": "Mozilla/5.0"}, timeout=45)
+            response.raise_for_status()
+            soup = BeautifulSoup(response.text, "html.parser")
+            button = soup.select_one("#downloadButton")
+            candidates = []
+            if button:
+                scrambled = button.get("data-scrambled-url")
+                if scrambled:
+                    candidates.append(base64.b64decode(scrambled).decode("utf-8"))
+                candidates.append(button.get("href"))
+            for node in soup.select('a[aria-label="Download file"], a[href*="download"][href*="mediafire.com"]'):
+                candidates.append(node.get("href"))
+            candidates.extend(re.findall(r'https?://download[0-9]+\.mediafire\.com[^" <]+', response.text))
+            for candidate in candidates:
+                if candidate:
+                    candidate = html.unescape(candidate)
+                    parsed = urlparse(candidate)
+                    if parsed.scheme == "https" and parsed.hostname and re.fullmatch(r"download\d*\.mediafire\.com", parsed.hostname):
+                        return candidate
+            errors.append(f"{page} => no download button")
+        except Exception as error:
+            errors.append(f"{page} => {error}")
+    raise RuntimeError("All MediaFire URLs failed: " + " | ".join(errors))
 
 def main():
     url = get_direct_url()
