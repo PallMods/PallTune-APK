@@ -14,8 +14,8 @@ import requests
 from bs4 import BeautifulSoup
 
 PAGE = "https://www.mediafire.com/file/nuwd6rktohfqhr0/PallTune+V4.3.5.apk/file"
-EXPECTED_SIZE = 39361232
-EXPECTED_SHA256 = "f6058f96eabda3987d8f0548e0538a03bf4ed8659bdc1599d0348857f9ac638d"
+EXPECTED_SIZE = 37550424
+EXPECTED_SHA256 = "1202a104dbcebd5032f2f69611dce40d66dd2eefe668de9ae1adc997f68a3c7c"
 OUT = Path("PallTune.apk")
 
 
