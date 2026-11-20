@@ -6,13 +6,12 @@ separate WebP assets for the website so animations consume less bandwidth
 and decoding work on mobile devices.
 """
 from pathlib import Path
-from PIL import Image, features
+from PIL import Image
 
 ASSETS = Path("assets")
 NAMES = ["hero", "player", "playlist", "lyrics", "together"]
 
-if not features.check_codec("webp"):
-    raise RuntimeError("Pillow does not support WebP encoding in this runner")
+# Pillow checks WebP availability automatically when saving images.
 
 for name in NAMES:
     source = ASSETS / f"palltune-{name}.gif"
