@@ -11,8 +11,8 @@ from PIL import Image, features
 ASSETS = Path("assets")
 NAMES = ["hero", "player", "playlist", "lyrics", "together"]
 
-if not features.check("webp_anim"):
-    raise RuntimeError("Pillow does not support animated WebP in this runner")
+if not features.check_codec("webp"):
+    raise RuntimeError("Pillow does not support WebP encoding in this runner")
 
 for name in NAMES:
     source = ASSETS / f"palltune-{name}.gif"
