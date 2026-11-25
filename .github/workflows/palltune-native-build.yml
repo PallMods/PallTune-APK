@@ -1,0 +1,61 @@
+name: PallTune FULL Android Build
+on:
+  push:
+    branches: [palltune-full-build]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  android:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Fetch pinned Metrolist source and submodules
+        run: |
+          git clone https://github.com/MetrolistGroup/Metrolist.git src
+          git -C src checkout 482f796480be8591962457f3cd450470d60fb1f4
+          git -C src submodule update --init --recursive
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+      - uses: android-actions/setup-android@v3
+      - name: Apply PallTune initial native theme
+        working-directory: src
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          def edit(name, pairs):
+              p = Path(name)
+              s = p.read_text()
+              for a,b in pairs:
+                  assert a in s, (name,a)
+                  s = s.replace(a,b)
+              p.write_text(s)
+          edit('gradle.properties', [('appVersion=14.0.1','appVersion=5.0.0')])
+          edit('androidApp/build.gradle.kts', [('applicationId = "com.metrolist.music"','applicationId = "com.pall.palltune"'),('versionCode = 155','versionCode = 50000'),('manifestPlaceholders["appLabel"] = "Metrolist KMP Debug"','manifestPlaceholders["appLabel"] = "PallTune"'),('buildConfigField("Boolean", "UPDATER_ENABLED", "true")','buildConfigField("Boolean", "UPDATER_ENABLED", "false")')])
+          edit('shared/src/commonMain/kotlin/com/metrolist/shared/ui/theme/CommonTheme.kt', [('0xFF6750A4','0xFF777A80'),('0xFF4285F4','0xFF777A80')])
+          edit('shared/src/commonMain/kotlin/com/metrolist/shared/ui/navigation/FloatingNavigationBar.kt', [('import androidx.compose.foundation.background','import androidx.compose.foundation.BorderStroke\nimport androidx.compose.foundation.background'),('color = MaterialTheme.colorScheme.surfaceContainer,','color = MaterialTheme.colorScheme.surfaceContainer.copy(alpha = 0.88f),\n            border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.65f)),')])
+          PY
+      - name: Compile native Android APK
+        working-directory: src
+        run: |
+          chmod +x gradlew
+          ./gradlew :androidApp:assembleDebug --no-daemon
+      - name: Upload test APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: PallTune-5.0.0-native-test
+          path: src/androidApp/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
+      - name: Upload corresponding modified source
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: PallTune-modified-source
+          path: |
+            src/
+            !src/.git/
+            !src/**/build/
+            !src/.gradle/
+            !src/**/.git/
